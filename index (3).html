@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AppHane — Play Store & App Store İndirme Hizmetleri</title>
+<meta name="description" content="Gerçek kullanıcılarla Play Store ve App Store indirme paketleri. Fiyat ve detay için WhatsApp'tan ulaşın." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#F4F6FB;
+    --ink:#0F1430;
+    --muted:#5B6178;
+    --surface:#FFFFFF;
+    --line:#E6E9F2;
+    --brand:#4F46E5;
+    --brand-2:#7C6FF0;
+    --grow:#10B981;
+    --wa:#25D366;
+    --wa-dark:#1EBE5A;
+    --amber:#F59E0B;
+    --ink-soft:#272D4D;
+    --radius:18px;
+    --shadow-sm:0 1px 2px rgba(15,20,48,.06), 0 4px 12px rgba(15,20,48,.05);
+    --shadow-md:0 8px 24px rgba(15,20,48,.10), 0 2px 6px rgba(15,20,48,.06);
+    --shadow-lg:0 24px 60px rgba(79,70,229,.18);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Inter",system-ui,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{font-family:"Space Grotesk",sans-serif;letter-spacing:-.02em;line-height:1.08}
+  .mono{font-family:"JetBrains Mono",monospace}
+  a{color:inherit;text-decoration:none}
+  .wrap{width:min(1120px,92vw);margin-inline:auto}
+
+  /* ---------- NAV ---------- */
+  header{position:sticky;top:0;z-index:50;background:rgba(244,246,251,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  nav{display:flex;align-items:center;justify-content:space-between;height:70px}
+  .brand{display:flex;align-items:center;gap:10px;font-family:"Space Grotesk";font-weight:700;font-size:19px}
+  .brand .mark{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--brand),var(--brand-2));display:grid;place-items:center;color:#fff;font-weight:700;box-shadow:var(--shadow-sm)}
+  .brand .mark svg{width:18px;height:18px}
+  .nav-links{display:flex;gap:30px;align-items:center}
+  .nav-links a{font-size:14.5px;font-weight:500;color:var(--muted);transition:color .15s}
+  .nav-links a:hover{color:var(--ink)}
+  .nav-cta{display:inline-flex;align-items:center;gap:8px;background:var(--wa);color:#fff;font-weight:600;font-size:14px;padding:9px 16px;border-radius:99px;box-shadow:0 4px 14px rgba(37,211,102,.35);transition:transform .15s,box-shadow .15s}
+  .nav-cta:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(37,211,102,.45)}
+  .nav-cta svg{width:16px;height:16px}
+  .menu-btn{display:none;background:none;border:1px solid var(--line);border-radius:10px;width:42px;height:42px;cursor:pointer;align-items:center;justify-content:center}
+  .menu-btn svg{width:20px;height:20px;stroke:var(--ink)}
+
+  /* ---------- HERO ---------- */
+  .hero{padding:70px 0 50px;position:relative}
+  .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--brand);background:rgba(79,70,229,.08);border:1px solid rgba(79,70,229,.16);padding:6px 13px;border-radius:99px;margin-bottom:22px}
+  .eyebrow .dot{width:7px;height:7px;border-radius:99px;background:var(--grow);box-shadow:0 0 0 4px rgba(16,185,129,.18)}
+  h1{font-size:clamp(34px,5vw,56px);font-weight:700}
+  h1 .grad{background:linear-gradient(120deg,var(--brand),var(--grow));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .lead{font-size:17px;color:var(--muted);margin:20px 0 30px;max-width:46ch}
+  .hero-actions{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .btn-primary{display:inline-flex;align-items:center;gap:9px;background:var(--wa);color:#fff;font-weight:600;font-size:15.5px;padding:14px 24px;border-radius:14px;box-shadow:0 8px 22px rgba(37,211,102,.32);transition:transform .15s,box-shadow .15s}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(37,211,102,.42)}
+  .btn-primary svg{width:19px;height:19px}
+  .btn-ghost{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:15px;color:var(--ink);padding:14px 10px}
+  .btn-ghost:hover{color:var(--brand)}
+  .hero-stats{display:flex;gap:30px;margin-top:38px;flex-wrap:wrap}
+  .hero-stats .stat .n{font-family:"Space Grotesk";font-weight:700;font-size:26px;color:var(--ink)}
+  .hero-stats .stat .l{font-size:13px;color:var(--muted);margin-top:2px}
+
+  /* live ticker card */
+  .ticker-card{background:var(--surface);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow-md);padding:22px;position:relative;overflow:hidden}
+  .ticker-card::before{content:"";position:absolute;inset:0;background:radial-gradient(420px 140px at 80% -10%,rgba(79,70,229,.10),transparent)}
+  .ticker-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;position:relative}
+  .ticker-head .live{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;color:var(--grow)}
+  .ticker-head .live .pulse{width:8px;height:8px;border-radius:99px;background:var(--grow);animation:pulse 1.6s ease-out infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(16,185,129,.5)}70%{box-shadow:0 0 0 9px rgba(16,185,129,0)}100%{box-shadow:0 0 0 0 rgba(16,185,129,0)}}
+  .ticker-head .label{font-size:12px;color:var(--muted)}
+  .feed{height:196px;overflow:hidden;position:relative;mask-image:linear-gradient(to bottom,transparent,#000 14%,#000 86%,transparent)}
+  .feed-track{display:flex;flex-direction:column;gap:10px;animation:scrollFeed 38s linear infinite}
+  .feed-item{display:flex;align-items:center;gap:12px;padding:10px 12px;background:var(--bg);border:1px solid var(--line);border-radius:13px}
+  .feed-item .ico{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;font-size:16px;flex-shrink:0}
+  .feed-item .ico.play{background:rgba(52,168,83,.12)}
+  .feed-item .ico.apple{background:rgba(15,20,48,.07)}
+  .feed-item .txt{flex:1;min-width:0}
+  .feed-item .txt .top{font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .feed-item .txt .sub{font-size:11.5px;color:var(--muted)}
+  .feed-item .amt{font-family:"JetBrains Mono";font-weight:700;font-size:13px;color:var(--grow);flex-shrink:0}
+  @keyframes scrollFeed{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:64px 0}
+  .sec-head{max-width:620px;margin-bottom:38px}
+  .sec-tag{font-size:13px;font-weight:600;color:var(--brand);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
+  .sec-head h2{font-size:clamp(26px,3.6vw,38px);font-weight:700}
+  .sec-head p{color:var(--muted);font-size:16px;margin-top:12px}
+
+  /* ---------- PLATFORM TABS ---------- */
+  .tabs{display:inline-flex;background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:5px;gap:4px;margin-bottom:34px;box-shadow:var(--shadow-sm)}
+  .tab{border:none;background:none;font-family:"Inter";font-weight:600;font-size:14px;color:var(--muted);padding:9px 20px;border-radius:99px;cursor:pointer;display:flex;align-items:center;gap:8px;transition:all .18s}
+  .tab svg{width:16px;height:16px}
+  .tab.active{background:var(--ink);color:#fff;box-shadow:var(--shadow-sm)}
+
+  /* ---------- PACKAGE CARDS ---------- */
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(248px,1fr));gap:20px}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:26px 24px 24px;position:relative;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s,border-color .2s}
+  .card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:#d6daea}
+  .card.featured{border-color:transparent;box-shadow:var(--shadow-lg)}
+  .card.featured::before{content:"";position:absolute;inset:0;border-radius:var(--radius);padding:1.5px;background:linear-gradient(135deg,var(--brand),var(--grow));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+  .badge-pop{position:absolute;top:-12px;left:24px;background:var(--amber);color:#3a2600;font-size:11.5px;font-weight:700;padding:5px 12px;border-radius:99px;box-shadow:var(--shadow-sm);text-transform:uppercase;letter-spacing:.03em}
+  .plat{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;padding:5px 11px;border-radius:8px;margin-bottom:16px;width:fit-content}
+  .plat.play{background:rgba(52,168,83,.10);color:#1f8a3b}
+  .plat.apple{background:rgba(15,20,48,.06);color:var(--ink)}
+  .plat svg{width:14px;height:14px}
+  .card h3{font-size:19px;font-weight:600;margin-bottom:4px}
+  .card .qty{display:flex;align-items:baseline;gap:6px;margin:6px 0 18px}
+  .card .qty .num{font-family:"JetBrains Mono";font-weight:700;font-size:34px;color:var(--ink);letter-spacing:-.03em}
+  .card .qty .unit{font-size:14px;color:var(--muted);font-weight:500}
+  .feats{list-style:none;display:flex;flex-direction:column;gap:11px;margin-bottom:24px;flex:1}
+  .feats li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--ink-soft)}
+  .feats li svg{width:17px;height:17px;flex-shrink:0;margin-top:1px;stroke:var(--grow)}
+  .price-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;padding-top:16px;border-top:1px dashed var(--line)}
+  .price-row .lbl{font-size:12.5px;color:var(--muted)}
+  .price-row .val{font-family:"Space Grotesk";font-weight:600;font-size:15px;color:var(--brand)}
+  .card-cta{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;background:var(--wa);color:#fff;font-weight:600;font-size:14.5px;padding:12px;border-radius:12px;transition:background .15s,transform .15s}
+  .card-cta:hover{background:var(--wa-dark);transform:translateY(-1px)}
+  .card-cta svg{width:17px;height:17px}
+  .card.featured .card-cta{background:linear-gradient(120deg,var(--brand),var(--brand-2))}
+  .card.featured .card-cta:hover{filter:brightness(1.06)}
+  /* iki seçenekli sipariş bloğu */
+  .buy-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .opt{display:flex;flex-direction:column;align-items:center;gap:3px;padding:12px 8px;border-radius:12px;cursor:pointer;transition:transform .15s,box-shadow .15s,border-color .15s,filter .15s}
+  .opt:hover{transform:translateY(-1px)}
+  .opt .opt-l{font-size:11.5px;font-weight:600;line-height:1.2;text-align:center}
+  .opt .opt-p{font-family:"JetBrains Mono";font-weight:700;font-size:14.5px;white-space:nowrap}
+  .opt.key{background:var(--brand);color:#fff;box-shadow:0 4px 14px rgba(79,70,229,.26)}
+  .opt.key:hover{filter:brightness(1.07);box-shadow:0 8px 20px rgba(79,70,229,.34)}
+  .opt.link{background:var(--bg);border:1px solid var(--line);color:var(--ink)}
+  .opt.link .opt-p{color:var(--brand)}
+  .opt.link:hover{border-color:var(--brand);box-shadow:var(--shadow-sm)}
+
+  /* ---------- EXTRAS ---------- */
+  .extras{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .extra-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+  .extra{background:var(--bg);border:1px solid var(--line);border-radius:16px;padding:22px}
+  .extra .ei{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,rgba(79,70,229,.12),rgba(16,185,129,.12));display:grid;place-items:center;margin-bottom:14px;font-size:20px}
+  .extra h4{font-family:"Space Grotesk";font-size:16px;font-weight:600;margin-bottom:6px}
+  .extra p{font-size:13.5px;color:var(--muted)}
+
+  /* ---------- STEPS ---------- */
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px;counter-reset:s}
+  .step{position:relative;padding-top:8px}
+  .step .sn{font-family:"JetBrains Mono";font-weight:700;font-size:14px;color:#fff;background:var(--brand);width:30px;height:30px;border-radius:9px;display:grid;place-items:center;margin-bottom:16px}
+  .step h4{font-family:"Space Grotesk";font-size:17px;font-weight:600;margin-bottom:7px}
+  .step p{font-size:14px;color:var(--muted)}
+
+  /* ---------- TRUST STRIP ---------- */
+  .trust{background:linear-gradient(120deg,var(--ink),#1a2147);border-radius:24px;padding:46px 40px;color:#fff;display:grid;grid-template-columns:repeat(4,1fr);gap:30px;box-shadow:var(--shadow-lg)}
+  .trust .t .n{font-family:"Space Grotesk";font-weight:700;font-size:34px;background:linear-gradient(120deg,#fff,var(--grow));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .trust .t .l{font-size:13.5px;color:rgba(255,255,255,.72);margin-top:4px}
+
+  /* ---------- CTA BANNER ---------- */
+  .cta-banner{text-align:center;padding:20px 0 10px}
+  .cta-banner h2{font-size:clamp(26px,3.6vw,38px);margin-bottom:14px}
+  .cta-banner p{color:var(--muted);font-size:16px;max-width:48ch;margin:0 auto 28px}
+
+  /* ---------- FOOTER ---------- */
+  footer{border-top:1px solid var(--line);padding:38px 0;margin-top:30px}
+  .foot{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+  .foot .brand{font-size:16px}
+  .foot .fnote{font-size:13px;color:var(--muted)}
+  .foot .flinks{display:flex;gap:22px;font-size:13.5px;color:var(--muted)}
+  .foot .flinks a:hover{color:var(--ink)}
+
+  /* ---------- FLOATING WHATSAPP BUBBLE ---------- */
+  .wa-float{position:fixed;right:22px;bottom:22px;z-index:80;display:flex;align-items:center;gap:0}
+  .wa-bubble{width:60px;height:60px;border-radius:50%;background:var(--wa);display:grid;place-items:center;box-shadow:0 10px 28px rgba(37,211,102,.45);cursor:pointer;position:relative;transition:transform .2s}
+  .wa-bubble:hover{transform:scale(1.06)}
+  .wa-bubble svg{width:32px;height:32px;fill:#fff}
+  .wa-bubble::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid var(--wa);animation:ring 2.2s ease-out infinite}
+  @keyframes ring{0%{transform:scale(1);opacity:.7}100%{transform:scale(1.5);opacity:0}}
+  .wa-tip{position:absolute;right:74px;bottom:11px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-md);border-radius:13px;padding:10px 14px;width:max-content;max-width:230px;opacity:0;transform:translateX(8px);pointer-events:none;transition:opacity .2s,transform .2s}
+  .wa-float:hover .wa-tip{opacity:1;transform:translateX(0)}
+  .wa-tip .tt{font-size:13.5px;font-weight:600}
+  .wa-tip .ts{font-size:12px;color:var(--muted)}
+  .wa-tip::after{content:"";position:absolute;right:-6px;bottom:18px;width:12px;height:12px;background:var(--surface);border-right:1px solid var(--line);border-bottom:1px solid var(--line);transform:rotate(-45deg)}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media(max-width:880px){
+    .nav-links{display:none}
+    .menu-btn{display:flex}
+    .nav-links.open{display:flex;position:absolute;top:70px;left:0;right:0;flex-direction:column;background:var(--surface);border-bottom:1px solid var(--line);padding:18px 6vw;gap:18px}
+    .hero-grid{grid-template-columns:1fr;gap:36px}
+    .trust{grid-template-columns:repeat(2,1fr);padding:34px 26px;gap:24px}
+  }
+  @media(max-width:520px){
+    .hero{padding:48px 0 30px}
+    .trust{grid-template-columns:1fr 1fr}
+    .wa-tip{display:none}
+    section{padding:48px 0}
+  }
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;scroll-behavior:auto!important}
+  }
+  :focus-visible{outline:3px solid rgba(79,70,229,.45);outline-offset:2px;border-radius:6px}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header>
+  <div class="wrap">
+    <nav>
+      <a href="#" class="brand">
+        <span class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M5 19l4-7 4 4 6-10" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        AppHane
+      </a>
+      <div class="nav-links" id="navLinks">
+        <a href="#paketler">Paketler</a>
+        <a href="#hizmetler">Ek Hizmetler</a>
+        <a href="#nasil">Nasıl Çalışır</a>
+        <a class="nav-cta" href="https://wa.me/905315264696?text=Merhaba%2C%20paketler%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-8.6 15l-1.3 4.8 4.9-1.3A10 10 0 1012 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.4-1.1-2.7 0-1.3.7-1.9.9-2.2.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 1.9c.1.1.1.3 0 .5l-.4.5-.3.3c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.6-.1l.7-.9c.2-.3.4-.2.6-.1l1.8.9c.2.1.4.2.5.3.1.2.1.5-.1 1z"/></svg>
+          WhatsApp
+        </a>
+      </div>
+      <button class="menu-btn" id="menuBtn" aria-label="Menü">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow"><span class="dot"></span> Gerçek kullanıcı · Organik tempo</span>
+      <h1>Uygulamanı <span class="grad">gerçek kullanıcılarla</span> zirveye taşı</h1>
+      <p class="lead">Play Store ve App Store için indirme paketleri. Bot yok, kademeli ve doğal tempoda teslimat. Fiyat ve detaylar için tek tıkla WhatsApp'tan ulaş.</p>
+      <div class="hero-actions">
+        <a class="btn-primary" href="https://wa.me/905315264696?text=Merhaba%2C%20uygulamam%20i%C3%A7in%20teklif%20almak%20istiyorum." target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-8.6 15l-1.3 4.8 4.9-1.3A10 10 0 1012 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.4-1.1-2.7 0-1.3.7-1.9.9-2.2.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 1.9c.1.1.1.3 0 .5l-.4.5-.3.3c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.6-.1l.7-.9c.2-.3.4-.2.6-.1l1.8.9c.2.1.4.2.5.3.1.2.1.5-.1 1z"/></svg>
+          WhatsApp'tan teklif al
+        </a>
+        <a class="btn-ghost" href="#paketler">Paketleri gör →</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><div class="n">5.000+</div><div class="l">Tamamlanan kampanya</div></div>
+        <div class="stat"><div class="n">%98</div><div class="l">Müşteri memnuniyeti</div></div>
+        <div class="stat"><div class="n">7/24</div><div class="l">Canlı destek</div></div>
+      </div>
+    </div>
+
+    <!-- LIVE TICKER (signature) -->
+    <div class="ticker-card">
+      <div class="ticker-head">
+        <span class="live"><span class="pulse"></span> Canlı akış</span>
+        <span class="label">son teslimatlar</span>
+      </div>
+      <div class="feed">
+        <div class="feed-track" id="feedTrack"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAKETLER -->
+<section id="paketler">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-tag">Paketler</div>
+      <h2>İndirme paketleri</h2>
+      <p>Platformunu seç, sana uygun paketi incele. Satın alma için WhatsApp üzerinden iletişime geç — fiyatı ve teslimat süresini birlikte netleştiriyoruz.</p>
+    </div>
+
+    <div class="tabs" role="tablist">
+      <button class="tab active" data-plat="play" role="tab">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 3.5v17l9.5-8.5L3 3.5zm11.3 7.2l3.4 1.8-3.4 1.9-2.3-2 2.3-1.7zm.2-.6L5 4.4 16.7 11l-2 .1zm0 3.8l2 .1L5 20.6l9.7-6.7z"/></svg>
+        Play Store
+      </button>
+      <button class="tab" data-plat="apple" role="tab">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.7c0-2.1 1.7-3.1 1.8-3.1-1-1.4-2.5-1.6-3-1.6-1.3-.1-2.5.7-3.1.7-.6 0-1.6-.7-2.7-.7-1.4 0-2.7.8-3.4 2-1.4 2.5-.4 6.2 1 8.3.7 1 1.5 2.1 2.5 2 1-.1 1.4-.6 2.6-.6 1.2 0 1.5.6 2.6.6 1.1 0 1.8-1 2.4-2 .8-1.1 1.1-2.2 1.1-2.3 0 0-2.1-.8-2.1-3.3zM14.5 6.3c.6-.7 1-1.6.9-2.6-.9 0-1.9.6-2.5 1.3-.5.6-1 1.5-.9 2.5 1 0 1.9-.5 2.5-1.2z"/></svg>
+        App Store
+      </button>
+    </div>
+
+    <div class="cards" id="cardGrid"></div>
+  </div>
+</section>
+
+<!-- EK HİZMETLER -->
+<section class="extras" id="hizmetler">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-tag">Ek Hizmetler</div>
+      <h2>İndirmeyi destekleyen hizmetler</h2>
+      <p>Sadece indirme değil — sıralamayı ve güveni birlikte büyüten ek seçenekler.</p>
+    </div>
+    <div class="extra-grid">
+      <div class="extra"><div class="ei">⭐</div><h4>Değerlendirme & Yorum</h4><p>Gerçek kullanıcılardan 5 yıldız puan ve doğal Türkçe yorumlar.</p></div>
+      <div class="extra"><div class="ei">📈</div><h4>ASO & Keyword Desteği</h4><p>Mağaza içi arama sıralaması için anahtar kelime danışmanlığı.</p></div>
+      <div class="extra"><div class="ei">🔁</div><h4>Retention / Aktif Kullanım</h4><p>Uygulamayı belirli süre açık tutan, etkileşim üreten kullanıcılar.</p></div>
+      <div class="extra"><div class="ei">🌍</div><h4>Ülke Hedefleme</h4><p>TR ve seçili ülkelerden coğrafi hedefli kampanya kurulumu.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- NASIL ÇALIŞIR -->
+<section id="nasil">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-tag">Süreç</div>
+      <h2>Nasıl çalışır?</h2>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="sn">1</div><h4>WhatsApp'tan yaz</h4><p>Uygulama linkini ve hedefini gönder. Sana en uygun paketi önerelim.</p></div>
+      <div class="step"><div class="sn">2</div><h4>Teklifi onayla</h4><p>Fiyatı, adedi ve teslimat hızını netleştirip kampanyayı başlatalım.</p></div>
+      <div class="step"><div class="sn">3</div><h4>Kademeli teslimat</h4><p>İndirmeler doğal tempoda, gün gün dağıtılarak gerçekleşir.</p></div>
+      <div class="step"><div class="sn">4</div><h4>Rapor & destek</h4><p>İlerlemeyi takip et, soruların için 7/24 destekteyiz.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST + CTA -->
+<section>
+  <div class="wrap">
+    <div class="trust">
+      <div class="t"><div class="n">5.000+</div><div class="l">Tamamlanan kampanya</div></div>
+      <div class="t"><div class="n">1.2M+</div><div class="l">Üretilen indirme</div></div>
+      <div class="t"><div class="n">%98</div><div class="l">Memnuniyet oranı</div></div>
+      <div class="t"><div class="n">7/24</div><div class="l">Canlı destek</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-banner">
+  <div class="wrap">
+    <h2>Uygulaman için doğru paketi bulalım</h2>
+    <p>Fiyat listesi sabit değil — uygulamana ve hedefine göre teklif çıkarıyoruz. Bir mesaj uzağındayız.</p>
+    <a class="btn-primary" href="https://wa.me/905315264696?text=Merhaba%2C%20paket%20teklifi%20almak%20istiyorum." target="_blank" rel="noopener" style="margin-inline:auto">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-8.6 15l-1.3 4.8 4.9-1.3A10 10 0 1012 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.4-1.1-2.7 0-1.3.7-1.9.9-2.2.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 1.9c.1.1.1.3 0 .5l-.4.5-.3.3c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.6-.1l.7-.9c.2-.3.4-.2.6-.1l1.8.9c.2.1.4.2.5.3.1.2.1.5-.1 1z"/></svg>
+      WhatsApp'tan yaz
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap foot">
+    <div>
+      <a href="#" class="brand"><span class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M5 19l4-7 4 4 6-10" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span> AppHane</a>
+      <div class="fnote" style="margin-top:8px">© 2026 AppHane · apphane.store · Tüm hakları saklıdır.</div>
+    </div>
+    <div class="flinks">
+      <a href="#paketler">Paketler</a>
+      <a href="#hizmetler">Ek Hizmetler</a>
+      <a href="#nasil">Süreç</a>
+      <a href="https://wa.me/905315264696" target="_blank" rel="noopener">İletişim</a>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING WHATSAPP -->
+<a class="wa-float" href="https://wa.me/905315264696?text=Merhaba%2C%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener" aria-label="WhatsApp'tan yaz">
+  <div class="wa-tip">
+    <div class="tt">Sorunuz mu var?</div>
+    <div class="ts">WhatsApp'tan hemen yazın</div>
+  </div>
+  <div class="wa-bubble">
+    <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 00-8.6 15l-1.3 4.8 4.9-1.3A10 10 0 1012 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.4-1.1-2.7 0-1.3.7-1.9.9-2.2.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 1.9c.1.1.1.3 0 .5l-.4.5-.3.3c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.6-.1l.7-.9c.2-.3.4-.2.6-.1l1.8.9c.2.1.4.2.5.3.1.2.1.5-.1 1z"/></svg>
+  </div>
+</a>
+
+<script>
+  // ---- WhatsApp numarası: buraya kendi numaranı yaz (ülke koduyla, başında + olmadan) ----
+  const WA = "905315264696";
+
+  // ---- Paket verileri ----
+  const baseFeat = ["Gerçek kullanıcılar","Gün gün dağıtım","En az 5 dk uygulama kullanımı"];
+  const review = n => `Ücretsiz ${n} yorum`;
+
+  const TIERS = [
+    {name:"Deneme",   n:50,   feat:[...baseFeat],            time:"1-2 gün",  pop:false},
+    {name:"Başlangıç",n:100,  feat:[...baseFeat,review(5)],  time:"1-2 gün",  pop:false},
+    {name:"Standart", n:250,  feat:[...baseFeat,review(10)], time:"2-3 gün",  pop:false},
+    {name:"Popüler",  n:500,  feat:[...baseFeat,review(20)], time:"3-4 gün",  pop:true},
+    {name:"Pro",      n:1000, feat:[...baseFeat,review(40)], time:"5-7 gün",  pop:false},
+    {name:"Kurumsal", n:5000, feat:[...baseFeat,review(100)],time:"10-14 gün",pop:false},
+  ];
+
+  // Adet başına fiyat (TL) — platform + indirme türüne göre
+  const PRICES = { play:{link:15, keyword:20}, apple:{link:30, keyword:40} };
+  const tl = v => v.toLocaleString("tr-TR") + " ₺";
+
+  const PACKAGES = { play: TIERS, apple: TIERS };
+
+  const check = '<svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>';
+  const waIcon = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-8.6 15l-1.3 4.8 4.9-1.3A10 10 0 1012 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.4-1.1-2.7 0-1.3.7-1.9.9-2.2.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 1.9c.1.1.1.3 0 .5l-.4.5-.3.3c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.6-.1l.7-.9c.2-.3.4-.2.6-.1l1.8.9c.2.1.4.2.5.3.1.2.1.5-.1 1z"/></svg>';
+  const playBadge = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 3.5v17l9.5-8.5L3 3.5zm11.3 7.2l3.4 1.8-3.4 1.9-2.3-2 2.3-1.7z"/></svg> Play Store';
+  const appleBadge = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.7c0-2.1 1.7-3.1 1.8-3.1-1-1.4-2.5-1.6-3-1.6-1.3-.1-2.5.7-3.1.7-.6 0-1.6-.7-2.7-.7-1.4 0-2.7.8-3.4 2-1.4 2.5-.4 6.2 1 8.3.7 1 1.5 2.1 2.5 2 1-.1 1.4-.6 2.6-.6 1.2 0 1.5.6 2.6.6 1.1 0 1.8-1 2.4-2 .8-1.1 1.1-2.2 1.1-2.3 0 0-2.1-.8-2.1-3.3zM14.5 6.3c.6-.7 1-1.6.9-2.6-.9 0-1.9.6-2.5 1.3-.5.6-1 1.5-.9 2.5 1 0 1.9-.5 2.5-1.2z"/></svg> App Store';
+
+  function renderCards(plat){
+    const grid = document.getElementById('cardGrid');
+    const platName = plat === 'play' ? 'Play Store' : 'App Store';
+    const pr = PRICES[plat];
+    grid.innerHTML = PACKAGES[plat].map(p => {
+      const qty = p.n.toLocaleString("tr-TR");
+      const keyPrice = tl(p.n * pr.keyword);
+      const linkPrice = tl(p.n * pr.link);
+      const keyMsg  = encodeURIComponent(`Merhaba, ${platName} ${qty} indirme (${p.name}) — Anahtar kelime ile indirme (${keyPrice}) sipariş vermek istiyorum.`);
+      const linkMsg = encodeURIComponent(`Merhaba, ${platName} ${qty} indirme (${p.name}) — Link ile indirme (${linkPrice}) sipariş vermek istiyorum.`);
+      return `
+      <div class="card ${p.pop?'featured':''}">
+        ${p.pop?'<span class="badge-pop">En çok tercih</span>':''}
+        <span class="plat ${plat}">${plat==='play'?playBadge:appleBadge}</span>
+        <h3>${p.name}</h3>
+        <div class="qty"><span class="num">${qty}</span><span class="unit">indirme</span></div>
+        <ul class="feats">${p.feat.map(f=>`<li>${check}<span>${f}</span></li>`).join('')}</ul>
+        <div class="price-row"><span class="lbl">Teslimat süresi</span><span class="val">${p.time}</span></div>
+        <div class="buy-opts">
+          <a class="opt key" href="https://wa.me/${WA}?text=${keyMsg}">
+            <span class="opt-l">Anahtar kelime ile</span>
+            <span class="opt-p">${keyPrice}</span>
+          </a>
+          <a class="opt link" href="https://wa.me/${WA}?text=${linkMsg}">
+            <span class="opt-l">Link ile indirme</span>
+            <span class="opt-p">${linkPrice}</span>
+          </a>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  document.querySelectorAll('.tab').forEach(t=>{
+    t.addEventListener('click',()=>{
+      document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+      t.classList.add('active');
+      renderCards(t.dataset.plat);
+    });
+  });
+  renderCards('play');
+
+  // ---- Canlı akış (signature) ----
+  // [isim, platform, adet, şehir] — 50 kişi, her biri farklı şehir, zaman yok
+  const people = [
+    ["Mehmet","play","500","İstanbul"],   ["Ayşe","apple","100","Ankara"],       ["Emre","play","250","İzmir"],
+    ["Zeynep","play","50","Bursa"],        ["Mustafa","apple","1.000","Antalya"], ["Elif","play","100","Adana"],
+    ["Burak","play","250","Konya"],        ["Fatma","apple","50","Gaziantep"],    ["Merve","play","500","Kayseri"],
+    ["Ahmet","play","100","Eskişehir"],    ["Selin","apple","250","Mersin"],      ["Can","play","50","Samsun"],
+    ["Büşra","play","100","Denizli"],      ["Kaan","apple","5.000","Kocaeli"],    ["Onur","play","250","Şanlıurfa"],
+    ["Gizem","play","50","Malatya"],       ["Hakan","apple","500","Trabzon"],     ["Deniz","play","100","Erzurum"],
+    ["Yusuf","play","250","Van"],          ["Ebru","apple","50","Diyarbakır"],    ["Serkan","play","1.000","Sakarya"],
+    ["Melis","play","100","Manisa"],       ["Tolga","apple","250","Balıkesir"],   ["Sevgi","play","50","Kahramanmaraş"],
+    ["Barış","play","500","Aydın"],        ["Aslı","apple","100","Tekirdağ"],     ["Volkan","play","250","Muğla"],
+    ["Pınar","play","50","Elazığ"],        ["Cem","apple","1.000","Sivas"],       ["Derya","play","100","Hatay"],
+    ["Umut","play","250","Ordu"],          ["Esra","apple","50","Afyonkarahisar"],["Kerem","play","500","Isparta"],
+    ["Nazlı","play","100","Çanakkale"],    ["Furkan","apple","250","Zonguldak"],  ["Sıla","play","5.000","Aksaray"],
+    ["Okan","play","50","Kütahya"],        ["Bengü","apple","100","Osmaniye"],    ["Halil","play","250","Çorum"],
+    ["Damla","play","500","Yozgat"],       ["Murat","apple","100","Tokat"],       ["Ceren","play","50","Uşak"],
+    ["Enes","play","250","Edirne"],        ["Tuğçe","apple","100","Karaman"],     ["Gökhan","play","1.000","Rize"],
+    ["İrem","play","50","Giresun"],        ["Sinan","apple","250","Nevşehir"],    ["Yasemin","play","100","Amasya"],
+    ["Berkay","play","500","Kırıkkale"],   ["Dilara","apple","250","Düzce"]
+  ];
+  function feedItem([name,plat,amt,city]){
+    return `<div class="feed-item">
+      <div class="ico ${plat}">${plat==='play'?'▶️':''}</div>
+      <div class="txt"><div class="top">${name}</div><div class="sub">${city}</div></div>
+      <div class="amt">${amt} indirme</div>
+    </div>`;
+  }
+  const track = document.getElementById('feedTrack');
+  const shuffled = [...people].sort(()=>Math.random()-0.5);
+  const loop = [...shuffled,...shuffled]; // çift kopya = sonsuz akış
+  track.innerHTML = loop.map(feedItem).join('');
+
+  // ---- Mobil menü ----
+  document.getElementById('menuBtn').addEventListener('click',()=>{
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+  document.querySelectorAll('#navLinks a').forEach(a=>a.addEventListener('click',()=>{
+    document.getElementById('navLinks').classList.remove('open');
+  }));
+
+  // ---- WhatsApp'a DOĞRUDAN aktar (link/ara sayfa göstermeden) ----
+  // whatsapp:// ile uygulama anında açılır. Uygulama açılırsa sayfa arka plana geçer
+  // ve wa.me yedeğine HİÇ gidilmez (link görünmez). Sadece uygulama yoksa wa.me devreye girer.
+  function openWA(text){
+    const phone = "905315264696";
+    const enc = encodeURIComponent(text || "Merhaba, bilgi almak istiyorum.");
+    const app = "whatsapp://send?phone=" + phone + "&text=" + enc;
+    const web = "https://wa.me/" + phone + "?text=" + enc;
+    let opened = false;
+    const mark = function(){ opened = true; };
+    document.addEventListener("visibilitychange", mark, { once:true });
+    window.addEventListener("blur", mark, { once:true });
+    window.addEventListener("pagehide", mark, { once:true });
+    setTimeout(function(){ if(!opened) window.location.href = web; }, 1500);
+    window.location.href = app;
+  }
+  document.addEventListener("click", function(e){
+    const a = e.target.closest('a[href*="wa.me"]');
+    if(!a) return;
+    e.preventDefault();
+    let text = "";
+    try { text = new URL(a.href).searchParams.get("text") || ""; } catch(_){}
+    openWA(text);
+  });
+</script>
+</body>
+</html>
