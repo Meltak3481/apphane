@@ -185,27 +185,64 @@
   .card .qty .num{font-family:"JetBrains Mono";font-weight:700;font-size:34px;color:var(--ink);letter-spacing:-.03em}
   .card .qty .unit{font-size:14px;color:var(--muted);font-weight:500}
   .feats{list-style:none;display:flex;flex-direction:column;gap:11px;margin-bottom:24px;flex:1}
-  .feats li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--ink-soft)}
-  .feats li svg{width:17px;height:17px;flex-shrink:0;margin-top:1px;stroke:var(--grow)}
-  .price-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;padding-top:16px;border-top:1px dashed var(--line)}
-  .price-row .lbl{font-size:12.5px;color:var(--muted)}
-  .price-row .val{font-family:"Space Grotesk";font-weight:600;font-size:15px;color:var(--brand)}
+  .feats li{display:flex;align-items:flex-start;gap:11px;font-size:14px;color:var(--ink-soft)}
+  .feats li svg{width:15px;height:15px;flex-shrink:0;stroke:var(--grow);background:rgba(16,185,129,.13);border-radius:50%;padding:3px;box-sizing:content-box}
+  /* Fiyat paneli — tonlu zemin */
+  .price-panel{margin-top:16px;background:linear-gradient(180deg,#f6f7fd,#eceffb);border:1px solid #e4e7f3;border-radius:15px;padding:14px 14px 15px}
+  .price-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+  .price-row .lbl{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--muted)}
+  .price-row .lbl svg{width:14px;height:14px;stroke:var(--muted)}
+  .price-row .val{font-family:"Space Grotesk";font-weight:700;font-size:15px;color:var(--brand)}
   .card-cta{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;background:var(--wa);color:#fff;font-weight:600;font-size:14.5px;padding:12px;border-radius:12px;transition:background .15s,transform .15s}
   .card-cta:hover{background:var(--wa-dark);transform:translateY(-1px)}
   .card-cta svg{width:17px;height:17px}
-  .card.featured .card-cta{background:linear-gradient(120deg,var(--brand),var(--brand-2))}
-  .card.featured .card-cta:hover{filter:brightness(1.06)}
   /* iki seçenekli sipariş bloğu */
   .buy-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-  .opt{display:flex;flex-direction:column;align-items:center;gap:3px;padding:12px 8px;border-radius:12px;cursor:pointer;transition:transform .15s,box-shadow .15s,border-color .15s,filter .15s}
-  .opt:hover{transform:translateY(-1px)}
-  .opt .opt-l{font-size:11.5px;font-weight:600;line-height:1.2;text-align:center}
-  .opt .opt-p{font-family:"JetBrains Mono";font-weight:700;font-size:14.5px;white-space:nowrap}
-  .opt.key{background:var(--brand);color:#fff;box-shadow:0 4px 14px rgba(79,70,229,.26)}
-  .opt.key:hover{filter:brightness(1.07);box-shadow:0 8px 20px rgba(79,70,229,.34)}
-  .opt.link{background:var(--bg);border:1px solid var(--line);color:var(--ink)}
+  .opt{display:flex;flex-direction:column;align-items:center;gap:2px;padding:13px 8px 11px;border-radius:13px;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s,border-color .15s,filter .15s}
+  .opt:hover{transform:translateY(-2px)}
+  .opt .opt-p{font-family:"JetBrains Mono";font-weight:700;font-size:16px;white-space:nowrap;letter-spacing:-.02em}
+  .opt-unit{font-size:10px;font-weight:500;opacity:.7;margin-top:1px}
+  .opt.key{background:linear-gradient(140deg,#5b4ff0,#7c6ff0);color:#fff;box-shadow:0 6px 18px rgba(79,70,229,.34)}
+  .opt.key::after{content:"";position:absolute;top:-40%;left:-30%;width:60%;height:180%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);transform:rotate(20deg)}
+  .opt.key:hover{filter:brightness(1.06);box-shadow:0 10px 24px rgba(79,70,229,.42)}
+  .opt.link{background:#fff;border:1.5px solid #dfe2f0;color:var(--ink)}
   .opt.link .opt-p{color:var(--brand)}
-  .opt.link:hover{border-color:var(--brand);box-shadow:var(--shadow-sm)}
+  .opt.link:hover{border-color:var(--brand);box-shadow:0 6px 16px rgba(79,70,229,.14)}
+
+  /* ===== Profesyonel görünüm eklemeleri ===== */
+  .store-ic{width:100%;height:100%;display:block}
+
+  /* Kart yeniden düzeni: renkli mağaza başlığı */
+  .card{padding:0;overflow:visible}
+  .card-head{display:flex;align-items:center;gap:12px;padding:16px 18px;border-bottom:1px solid var(--line);border-radius:17px 17px 0 0}
+  .card-head.play{background:linear-gradient(135deg,rgba(0,195,255,.12),rgba(0,230,118,.12))}
+  .card-head.apple{background:linear-gradient(135deg,rgba(10,132,255,.12),rgba(94,92,230,.12))}
+  .store-chip{width:40px;height:40px;border-radius:11px;background:#fff;box-shadow:var(--shadow-sm);padding:8px;flex-shrink:0}
+  .store-txt{display:flex;flex-direction:column;line-height:1.15}
+  .store-txt b{font-family:"Space Grotesk";font-size:15px;font-weight:600;color:var(--ink)}
+  .store-txt i{font-style:normal;font-size:11px;color:var(--muted)}
+  .card-body{padding:18px 20px 20px;display:flex;flex-direction:column;flex:1}
+  .qty-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px}
+  .qty-row .qty{margin:0}
+  .tier-name{font-family:"Space Grotesk";font-weight:600;font-size:12.5px;color:var(--brand);background:rgba(79,70,229,.09);padding:4px 11px;border-radius:99px;white-space:nowrap}
+
+  /* Fiyat butonları: ikon + iki satır */
+  .opt{gap:4px}
+  .opt-top{display:flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;line-height:1.1;position:relative;z-index:1}
+  .opt-top svg{width:13px;height:13px;flex-shrink:0}
+  .opt .opt-p,.opt-unit{position:relative;z-index:1}
+  .opt.key .opt-top{color:rgba(255,255,255,.92)}
+
+  /* Popüler rozet: yıldızlı */
+  .badge-pop{display:inline-flex;align-items:center;gap:4px}
+
+  /* Hero: desteklenen platform çipleri */
+  .plat-support{display:flex;align-items:center;gap:9px;margin-top:26px;flex-wrap:wrap}
+  .ps-lbl{font-size:12px;color:var(--muted);margin-right:2px}
+  .ps-chip{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--ink);background:var(--surface);border:1px solid var(--line);padding:7px 13px;border-radius:99px;box-shadow:var(--shadow-sm)}
+  .ps-chip svg{width:18px;height:18px}
+  /* Sekmelerde renkli logo */
+  .tab .store-ic{width:17px;height:17px}
 
   /* ---------- EXTRAS ---------- */
   .extras{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
@@ -332,6 +369,17 @@
         <div class="stat"><div class="n">%98</div><div class="l">Müşteri memnuniyeti</div></div>
         <div class="stat"><div class="n">7/24</div><div class="l">Canlı destek</div></div>
       </div>
+      <div class="plat-support">
+        <span class="ps-lbl">Desteklenen platformlar:</span>
+        <span class="ps-chip">
+          <svg viewBox="0 0 24 24"><path fill="#00C3FF" d="M3.5 2.2 13.4 12 3.5 21.8Z"/><path fill="#FF3D47" d="M3.5 2.2 13.4 12 18.2 9.2Z"/><path fill="#00E676" d="M3.5 21.8 13.4 12 18.2 14.8Z"/><path fill="#FFCE00" d="M13.4 12 18.2 9.2 21 12 18.2 14.8Z"/></svg>
+          Google Play
+        </span>
+        <span class="ps-chip">
+          <svg viewBox="0 0 24 24"><rect width="24" height="24" rx="5.4" fill="#0A84FF"/><path d="M8 16.3 12 7.7 16 16.3" stroke="#fff" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.7 13.1h4.6" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/></svg>
+          App Store
+        </span>
+      </div>
     </div>
 
     <!-- LIVE TICKER (signature) -->
@@ -358,11 +406,11 @@
 
     <div class="tabs" role="tablist">
       <button class="tab active" data-plat="play" role="tab">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 3.5v17l9.5-8.5L3 3.5zm11.3 7.2l3.4 1.8-3.4 1.9-2.3-2 2.3-1.7zm.2-.6L5 4.4 16.7 11l-2 .1zm0 3.8l2 .1L5 20.6l9.7-6.7z"/></svg>
-        Play Store
+        <svg viewBox="0 0 24 24" class="store-ic"><path fill="#00C3FF" d="M3.5 2.2 13.4 12 3.5 21.8Z"/><path fill="#FF3D47" d="M3.5 2.2 13.4 12 18.2 9.2Z"/><path fill="#00E676" d="M3.5 21.8 13.4 12 18.2 14.8Z"/><path fill="#FFCE00" d="M13.4 12 18.2 9.2 21 12 18.2 14.8Z"/></svg>
+        Google Play
       </button>
       <button class="tab" data-plat="apple" role="tab">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.7c0-2.1 1.7-3.1 1.8-3.1-1-1.4-2.5-1.6-3-1.6-1.3-.1-2.5.7-3.1.7-.6 0-1.6-.7-2.7-.7-1.4 0-2.7.8-3.4 2-1.4 2.5-.4 6.2 1 8.3.7 1 1.5 2.1 2.5 2 1-.1 1.4-.6 2.6-.6 1.2 0 1.5.6 2.6.6 1.1 0 1.8-1 2.4-2 .8-1.1 1.1-2.2 1.1-2.3 0 0-2.1-.8-2.1-3.3zM14.5 6.3c.6-.7 1-1.6.9-2.6-.9 0-1.9.6-2.5 1.3-.5.6-1 1.5-.9 2.5 1 0 1.9-.5 2.5-1.2z"/></svg>
+        <svg viewBox="0 0 24 24" class="store-ic"><rect width="24" height="24" rx="5.4" fill="#0A84FF"/><path d="M8 16.3 12 7.7 16 16.3" stroke="#fff" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.7 13.1h4.6" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/></svg>
         App Store
       </button>
     </div>
@@ -528,8 +576,10 @@
 
   const check = '<svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>';
   const waIcon = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-8.6 15l-1.3 4.8 4.9-1.3A10 10 0 1012 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.4-1.1-2.7 0-1.3.7-1.9.9-2.2.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 1.9c.1.1.1.3 0 .5l-.4.5-.3.3c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.6-.1l.7-.9c.2-.3.4-.2.6-.1l1.8.9c.2.1.4.2.5.3.1.2.1.5-.1 1z"/></svg>';
-  const playBadge = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 3.5v17l9.5-8.5L3 3.5zm11.3 7.2l3.4 1.8-3.4 1.9-2.3-2 2.3-1.7z"/></svg> Play Store';
-  const appleBadge = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.7c0-2.1 1.7-3.1 1.8-3.1-1-1.4-2.5-1.6-3-1.6-1.3-.1-2.5.7-3.1.7-.6 0-1.6-.7-2.7-.7-1.4 0-2.7.8-3.4 2-1.4 2.5-.4 6.2 1 8.3.7 1 1.5 2.1 2.5 2 1-.1 1.4-.6 2.6-.6 1.2 0 1.5.6 2.6.6 1.1 0 1.8-1 2.4-2 .8-1.1 1.1-2.2 1.1-2.3 0 0-2.1-.8-2.1-3.3zM14.5 6.3c.6-.7 1-1.6.9-2.6-.9 0-1.9.6-2.5 1.3-.5.6-1 1.5-.9 2.5 1 0 1.9-.5 2.5-1.2z"/></svg> App Store';
+  const playBadge  = '<svg viewBox="0 0 24 24" class="store-ic"><path fill="#00C3FF" d="M3.5 2.2 13.4 12 3.5 21.8Z"/><path fill="#FF3D47" d="M3.5 2.2 13.4 12 18.2 9.2Z"/><path fill="#00E676" d="M3.5 21.8 13.4 12 18.2 14.8Z"/><path fill="#FFCE00" d="M13.4 12 18.2 9.2 21 12 18.2 14.8Z"/></svg>';
+  const appleBadge = '<svg viewBox="0 0 24 24" class="store-ic"><rect width="24" height="24" rx="5.4" fill="#0A84FF"/><path d="M8 16.3 12 7.7 16 16.3" stroke="#fff" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.7 13.1h4.6" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/></svg>';
+  const keyIcon  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>';
+  const linkIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 15l6-6"/><path d="M11 6l1-1a4 4 0 0 1 6 6l-1 1"/><path d="M13 18l-1 1a4 4 0 0 1-6-6l1-1"/></svg>';
 
   function renderCards(plat){
     const grid = document.getElementById('cardGrid');
@@ -539,25 +589,41 @@
       const qty = p.n.toLocaleString("tr-TR");
       const keyPrice = tl(p.n * pr.keyword);
       const linkPrice = tl(p.n * pr.link);
+      const storeName = plat === 'play' ? 'Google Play' : 'App Store';
+      const logo = plat === 'play' ? playBadge : appleBadge;
       const keyMsg  = encodeURIComponent(`Merhaba, ${platName} ${qty} indirme (${p.name}) — Anahtar kelime ile indirme (${keyPrice}) sipariş vermek istiyorum.`);
       const linkMsg = encodeURIComponent(`Merhaba, ${platName} ${qty} indirme (${p.name}) — Link ile indirme (${linkPrice}) sipariş vermek istiyorum.`);
       return `
       <div class="card ${p.pop?'featured':''}">
-        ${p.pop?'<span class="badge-pop">En çok tercih</span>':''}
-        <span class="plat ${plat}">${plat==='play'?playBadge:appleBadge}</span>
-        <h3>${p.name}</h3>
-        <div class="qty"><span class="num">${qty}</span><span class="unit">indirme</span></div>
-        <ul class="feats">${p.feat.map(f=>`<li>${check}<span>${f}</span></li>`).join('')}</ul>
-        <div class="price-row"><span class="lbl">Teslimat süresi</span><span class="val">${p.time}</span></div>
-        <div class="buy-opts">
-          <a class="opt key" href="https://wa.me/${WA}?text=${keyMsg}">
-            <span class="opt-l">Anahtar kelime ile</span>
-            <span class="opt-p">${keyPrice}</span>
-          </a>
-          <a class="opt link" href="https://wa.me/${WA}?text=${linkMsg}">
-            <span class="opt-l">Link ile indirme</span>
-            <span class="opt-p">${linkPrice}</span>
-          </a>
+        ${p.pop?'<span class="badge-pop">★ En çok tercih</span>':''}
+        <div class="card-head ${plat}">
+          <span class="store-chip">${logo}</span>
+          <span class="store-txt"><b>${storeName}</b><i>uygulama indirme</i></span>
+        </div>
+        <div class="card-body">
+          <div class="qty-row">
+            <div class="qty"><span class="num">${qty}</span><span class="unit">indirme</span></div>
+            <span class="tier-name">${p.name}</span>
+          </div>
+          <ul class="feats">${p.feat.map(f=>`<li>${check}<span>${f}</span></li>`).join('')}</ul>
+          <div class="price-panel">
+            <div class="price-row">
+              <span class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Teslimat süresi</span>
+              <span class="val">${p.time}</span>
+            </div>
+            <div class="buy-opts">
+              <a class="opt key" href="https://wa.me/${WA}?text=${keyMsg}">
+                <span class="opt-top">${keyIcon}Anahtar kelime</span>
+                <span class="opt-p">${keyPrice}</span>
+                <span class="opt-unit">adet başı ${pr.keyword}₺</span>
+              </a>
+              <a class="opt link" href="https://wa.me/${WA}?text=${linkMsg}">
+                <span class="opt-top">${linkIcon}Link ile</span>
+                <span class="opt-p">${linkPrice}</span>
+                <span class="opt-unit">adet başı ${pr.link}₺</span>
+              </a>
+            </div>
+          </div>
         </div>
       </div>`;
     }).join('');
