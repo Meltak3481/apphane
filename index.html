@@ -2,6 +2,14 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8" />
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8FB9RQRD1B"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-8FB9RQRD1B');
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>AppHane — Play Store & App Store Uygulama İndirme Hizmetleri</title>
 <meta name="description" content="Play Store ve App Store için gerçek kullanıcılarla uygulama indirme paketleri. Anahtar kelime ile ve link ile indirme, ücretsiz yorum. Fiyat için WhatsApp'tan yaz." />
@@ -611,6 +619,10 @@
   function openWA(text){
     const phone = "905315264696";
     const enc = encodeURIComponent(text || "Merhaba, bilgi almak istiyorum.");
+    // GA4: WhatsApp tıklamasını dönüşüm olayı olarak gönder
+    if(typeof gtag === "function"){
+      gtag('event', 'whatsapp_click', { mesaj: (text || "").slice(0,100) });
+    }
     const app = "whatsapp://send?phone=" + phone + "&text=" + enc;
     const web = "https://wa.me/" + phone + "?text=" + enc;
     let opened = false;
