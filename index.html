@@ -205,9 +205,13 @@
   .opt.key{background:linear-gradient(140deg,#5b4ff0,#7c6ff0);color:#fff;box-shadow:0 6px 18px rgba(79,70,229,.34)}
   .opt.key::after{content:"";position:absolute;top:-40%;left:-30%;width:60%;height:180%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);transform:rotate(20deg)}
   .opt.key:hover{filter:brightness(1.06);box-shadow:0 10px 24px rgba(79,70,229,.42)}
-  .opt.link{background:#fff;border:1.5px solid #dfe2f0;color:var(--ink)}
+  .opt.link{background:linear-gradient(160deg,#ffffff,#eef0fb);border:1.5px solid #d4d8ec;color:var(--ink);box-shadow:0 4px 12px rgba(79,70,229,.10)}
+  .opt.link .opt-top{color:var(--brand)}
   .opt.link .opt-p{color:var(--brand)}
-  .opt.link:hover{border-color:var(--brand);box-shadow:0 6px 16px rgba(79,70,229,.14)}
+  .opt.link:hover{border-color:var(--brand);box-shadow:0 8px 20px rgba(79,70,229,.18)}
+  /* Özellik listesi — hafif zeminli panel */
+  .feats{background:linear-gradient(180deg,#fbfbfe,#f4f5fc);border:1px solid #eceef7;border-radius:13px;padding:15px 16px;margin-bottom:0!important}
+  .feats li{font-size:14px}
 
   /* ===== Profesyonel görünüm eklemeleri ===== */
   .store-ic{width:100%;height:100%;display:block}
@@ -595,7 +599,6 @@
       const linkMsg = encodeURIComponent(`Merhaba, ${platName} ${qty} indirme (${p.name}) — Link ile indirme (${linkPrice}) sipariş vermek istiyorum.`);
       return `
       <div class="card ${p.pop?'featured':''}">
-        ${p.pop?'<span class="badge-pop">★ En çok tercih</span>':''}
         <div class="card-head ${plat}">
           <span class="store-chip">${logo}</span>
           <span class="store-txt"><b>${storeName}</b><i>uygulama indirme</i></span>
@@ -603,7 +606,6 @@
         <div class="card-body">
           <div class="qty-row">
             <div class="qty"><span class="num">${qty}</span><span class="unit">indirme</span></div>
-            <span class="tier-name">${p.name}</span>
           </div>
           <ul class="feats">${p.feat.map(f=>`<li>${check}<span>${f}</span></li>`).join('')}</ul>
           <div class="price-panel">
@@ -615,12 +617,10 @@
               <a class="opt key" href="https://wa.me/${WA}?text=${keyMsg}">
                 <span class="opt-top">${keyIcon}Anahtar kelime</span>
                 <span class="opt-p">${keyPrice}</span>
-                <span class="opt-unit">adet başı ${pr.keyword}₺</span>
               </a>
               <a class="opt link" href="https://wa.me/${WA}?text=${linkMsg}">
                 <span class="opt-top">${linkIcon}Link ile</span>
                 <span class="opt-p">${linkPrice}</span>
-                <span class="opt-unit">adet başı ${pr.link}₺</span>
               </a>
             </div>
           </div>
